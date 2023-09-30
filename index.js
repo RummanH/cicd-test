@@ -6,7 +6,7 @@ const port = process.env.PORT || 5001; // You can choose any available port
 app.get("/hello", (req, res) => {
   res.send("Hello");
 });
-app.get("/hello", (req, res) => {
+app.get("/got", (req, res) => {
   res.status(200).json({ status: "success" });
 });
 
