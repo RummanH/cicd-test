@@ -1,0 +1,31 @@
+name: CICD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Login to docker hub
+        run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
+      - name: Build docker image
+        run: docker build -t rumman103/test-cicd .
+      - name: Publish image to docker hub
+        run: docker push  rumman103/test-cicd:latest
+  
+  deploy:
+    needs: build
+    runs-on: [test-cid]
+    steps:
+      - name: Pull Image from Docker Hub
+        run: docker pull rumman103/test-cicd:latest
+      - name:  Delete old Container
+        run: docker rm -f nodejs-app-container
+      - name: Run Docker Container
+        run: docker run -d -p 5001:5001 -name nodejs-app-container rumman103/test-cicd   
+
+
