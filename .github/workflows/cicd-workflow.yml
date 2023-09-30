@@ -26,6 +26,6 @@ jobs:
       - name:  Delete old Container
         run: docker rm -f nodejs-app-container
       - name: Run Docker Container
-        run: docker run -d -p 5001:5001 -name nodejs-app-container rumman103/test-cicd   
+        run: docker run -d -p 5001:5001 --name nodejs-app-container rumman103/test-cicd   
 
 
